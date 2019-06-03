@@ -3,7 +3,6 @@ package br.com.treepixel.SisACTE.entities;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,21 +13,19 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import br.com.treepixel.SisACTE.entities.Denunciation;
 
-@Entity
-@Table(name = "city")
-@JsonIgnoreProperties({ "denunciations" })
-public class City implements Serializable {
 
-	private static final long serialVersionUID = 7107954996958653104L;
+@Entity
+@Table(name = "state")
+@JsonIgnoreProperties({ "denunciations"})
+public class State implements Serializable {
+
+	private static final long serialVersionUID = 7614269641082723826L;
 	
 	private Integer id;
 	private String name;
-	private Integer uf;
-	private Float latitude;
-	private Float longitude;
+	private String uf;
 	private List<Denunciation> denunciations;
 	
 	@Id
@@ -49,33 +46,18 @@ public class City implements Serializable {
 	}
 	
 	@Column
-	public Integer getUf() {
+	public String getUf() {
 		return uf;
 	}
-	public void setUf(Integer uf) {
+	public void setUf(String uf) {
 		this.uf = uf;
 	}
 	
-	@Column
-	public Float getLatitude() {
-		return latitude;
-	}
-	public void setLatitude(Float latitude) {
-		this.latitude = latitude;
-	}
-	
-	@Column
-	public Float getLongitude() {
-		return longitude;
-	}
-	public void setLongitude(Float longitude) {
-		this.longitude = longitude;
-	}
-	
-	@OneToMany(mappedBy = "employerCity", fetch = FetchType.LAZY, cascade = CascadeType.ALL )
+	@OneToMany(mappedBy = "employerUf", fetch = FetchType.LAZY )
 	public List<Denunciation> getDenunciations() {
 		return denunciations;
 	}
+
 	public void setDenunciations(List<Denunciation> denunciations) {
 		this.denunciations = denunciations;
 	}

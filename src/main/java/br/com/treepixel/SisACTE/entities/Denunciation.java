@@ -5,13 +5,16 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.vividsolutions.jts.geom.Point;
 
 @Entity
@@ -23,6 +26,8 @@ public class Denunciation implements Serializable {
 	private Long 								id;
     private String 								employerName;
     private String 								employerAddress;
+    private City								employerCity;
+    private State								employerUf;
     private Double 								employerLong;
     private Double 								employerLat;
     private Point 								employerPosition;
@@ -69,6 +74,22 @@ public class Denunciation implements Serializable {
 		this.employerAddress = employerAddress;
 	}
 	
+	@ManyToOne(fetch = FetchType.EAGER)
+	public City getEmployerCity() {
+		return employerCity;
+	}
+	public void setEmployerCity(City employerCity) {
+		this.employerCity = employerCity;
+	}
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	public State getEmployerUf() {
+		return employerUf;
+	}
+	public void setEmployerUf(State employerUf) {
+		this.employerUf = employerUf;
+	}
+	
 	@Column
 	public Double getEmployerLong() {
 		return employerLong;
@@ -86,6 +107,7 @@ public class Denunciation implements Serializable {
 	}
 	
 	@Column
+	@JsonIgnore
 	public Point getEmployerPosition() {
 		return employerPosition;
 	}
