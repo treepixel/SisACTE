@@ -2,20 +2,29 @@ package br.com.treepixel.SisACTE.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.vividsolutions.jts.geom.Point;
+
 
 @Entity
 @Table(name = "denunciation")
@@ -42,6 +51,9 @@ public class Denunciation implements Serializable {
     private String								denunciatorCelphone;
     private String								denunciatorEmail;
     private String								denunciatorMoreInformation;
+    private List<Quiz> 							quiz;
+    private List<Indicator>						indicators;
+    private Integer								score;
     private String								status;
     private Boolean								archived;
     private Date 								createdAt;
@@ -201,6 +213,36 @@ public class Denunciation implements Serializable {
 	}
 	public void setDenunciatorMoreInformation(String denunciatorMoreInformation) {
 		this.denunciatorMoreInformation = denunciatorMoreInformation;
+	}
+	
+	@OneToMany(mappedBy = "denunciation", fetch = FetchType.LAZY, cascade = CascadeType.ALL )
+	@JsonManagedReference
+	public List<Quiz> getQuiz() {
+		return quiz;
+	}
+	public void setQuiz(List<Quiz> quiz) {
+		this.quiz = quiz;
+	}
+	
+	@ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "denunciation_indicator", 
+    	joinColumns = { @JoinColumn(name = "denunciationId") }, 
+    	inverseJoinColumns = { @JoinColumn(name = "indicatorId") 
+    })
+    @JsonIgnoreProperties("denunciation")
+	public List<Indicator> getIndicators() {
+		return indicators;
+	}
+	public void setIndicators(List<Indicator> indicators) {
+		this.indicators = indicators;
+	}
+		
+	@Column
+	public Integer getScore() {
+		return score;
+	}
+	public void setScore(Integer score) {
+		this.score = score;
 	}
 	
 	@Column
