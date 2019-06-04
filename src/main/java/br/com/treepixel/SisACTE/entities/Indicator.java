@@ -18,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "indicator")
-public class Indicator implements Serializable{
+public class Indicator implements Serializable {
 	
 	private static final long serialVersionUID = -1358101016316089831L;
 
