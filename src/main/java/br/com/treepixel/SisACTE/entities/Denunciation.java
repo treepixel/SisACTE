@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,9 +26,12 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.vividsolutions.jts.geom.Point;
 
+import br.com.treepixel.SisACTE.listeners.DenunciationListener;
+
 
 @Entity
 @Table(name = "denunciation")
+@EntityListeners(DenunciationListener.class)
 public class Denunciation implements Serializable {
 
 	private static final long serialVersionUID = 5696897952182823517L;

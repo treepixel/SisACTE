@@ -121,11 +121,10 @@ public class DenunciationSpecification implements Specification<Denunciation>{
 				    coordinateList.add(new Coordinate(vertices.getJSONObject(0).getDouble("lat"), vertices.getJSONObject(0).getDouble("lng")));
 				    
 				} catch (JSONException e) {
-					
 					e.printStackTrace();
 				}
 				
-				Polygon window= factory.createPolygon(coordinateList.toCoordinateArray());
+				Polygon window = factory.createPolygon(coordinateList.toCoordinateArray());
 				predicates.add(new WithinPredicate((CriteriaBuilderImpl) criteriaBuilder, root.get("employerPosition"), window));
 			}
 			
